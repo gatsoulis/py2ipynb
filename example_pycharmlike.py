@@ -9,10 +9,14 @@
 """
 
 ##
+#slide:skip
+#%matplotlib inline
+
+##
 print("first cell")
 
 ##
-#slide: skip
+#slide:skip
 print("second cell")
 
 ##

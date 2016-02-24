@@ -47,6 +47,9 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
                 metadata["slideshow"]["slide_type"] = slidetype
                 continue
 
+            if "%matplotlib" in l1:
+                l = l.strip()[1:].strip()
+
             if l1 not in ignores:
                 lines.append(l)
 
