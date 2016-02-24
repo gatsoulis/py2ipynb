@@ -71,11 +71,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("input", help="input python file")
     parser.add_argument("output", help="output notebook file")
-    parser.add_argument("-c", "--cellmark-style", help="pycharm|spyder (pycharm)")
+    parser.add_argument("-c", "--cellmark-style", default="pycharm",
+                        help="pycharm|spyder (pycharm)")
     args = parser.parse_args()
-
-    if not args.cellmark_style:
-        args.cellmark_style = "pycharm"
 
     py2ipynb(args.input, args.output, args.cellmark_style,
              ["# ----------------------------------------------------------------------------"])
