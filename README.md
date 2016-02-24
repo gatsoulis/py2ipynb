@@ -16,15 +16,17 @@ Spyder style:
  py2ipynb.py -c spyder example_spyderlike.py example_from_spyderlike.ipynb
 ```
 
-## Cell markers
+## Markers
 
-### Code cell:
+### Cells
+
+#### Code cell:
 * pycharm style: `##`
 * spyder style: `#%%`
 
 **Default** is pycharm style (`##`).
 
-### Markdown cell:
+#### Markdown cell:
 
 Use one of the code cell markers first, then in a newline follow by `#md`
 (also `# md`, `#markdown`, `# markdown`), and include your markdown code within a block comment below.
@@ -46,6 +48,9 @@ E.g.
 ##
 print("hello world")
 ```
+
+### Inline matplotlib
+Simply add in a new line after the cell marker `#%matplotlib inline` or `# %matplotlib inline`, or instead of `inline` any [other backend supported](http://ipython.org/ipython-doc/stable/interactive/reference.html#plotting-with-matplotlib).
 
 ### Slide metadata
 
