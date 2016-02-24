@@ -70,3 +70,6 @@ target/
 
 # pycharm
 .idea/
+
+#
+test.*

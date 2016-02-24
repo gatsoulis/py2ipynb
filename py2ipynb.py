@@ -6,8 +6,13 @@ Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from
 
 import argparse
 import nbformat
-from nbformat.v4 import new_code_cell,new_notebook
+from nbformat.v4 import new_code_cell,new_markdown_cell,new_notebook
 import codecs
+from os import linesep
+
+
+CELLMARKS = {"pycharm": "##",
+             "spyder": "#%%"}
 
 
 def parsePy(py_filename, cellmode, other_ignores=[]):
@@ -18,21 +23,28 @@ def parsePy(py_filename, cellmode, other_ignores=[]):
     :param other_ignores: Other lines to ignore
     :return: A string containing one or more lines
     """
-    cellmarks = {"pycharm": "##",
-                 "spyder": "#%%"}
-    ignores = [v for k, v in cellmarks.items() if k != cellmode] + other_ignores
+    # ignores = ['"""', "'''"] + [v for k, v in CELLMARKS.items() if k != cellmode] + other_ignores
+    ignores = ['"""', "'''"] + CELLMARKS.values() + other_ignores
     with open(py_filename, "r") as f:
         lines = []
+        codecell = True
         for l in f:
             l1 = l.strip()
-            if lines and ((l1.startswith('# In[') and l1.endswith(']:')) or l1 == cellmarks[cellmode]):
-                yield "".join(lines)
+            if lines and ((l1.startswith('# In[') and l1.endswith(']:')) or l1 == CELLMARKS[cellmode]):
+                yield (codecell, "".join(lines).strip(linesep))
                 lines = []
+                codecell = True
                 continue
+
+            if l1 in ("#md", "# md", "#markdown", "# markdown"):
+                codecell = False
+                continue
+
             if l1 not in ignores:
                 lines.append(l)
+
         if lines:
-            yield "".join(lines)
+            yield (codecell, "".join(lines).strip(linesep))
 
 def py2ipynb(input, output, cellmode, other_ignores=[]):
     """Converts a .py file to a V.4 .ipynb notebook usiing `parsePy` function
@@ -45,7 +57,8 @@ def py2ipynb(input, output, cellmode, other_ignores=[]):
     # Create the code cells by parsing the file in input
     cells = []
     for c in parsePy(input, cellmode, other_ignores):
-        cells.append(new_code_cell(source=c))
+        codecell, code = c
+        cells.append(new_code_cell(source=code) if codecell else new_markdown_cell(source=code))
 
     # This creates a V4 Notebook with the code cells extracted above
     nb0 = new_notebook(cells=cells,
