@@ -1,6 +1,6 @@
 # py2ipynb
 
-Converts a .py file to a V.4 .ipynb notebook.
+Converts a .py file to a V.4 .ipynb jupyter/ipython notebook.
 
 Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from-ipython-notebook-format
 
@@ -8,12 +8,12 @@ Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from
 
 Default and pycharm style:
 ```bash
-./py2ipynb.py example_pycharmlike.py example_from_pycharmlike.ipynb
+py2ipynb.py example_pycharmlike.py example_from_pycharmlike.ipynb
 ```
 
 Spyder style:
 ```bash
- ./py2ipynb.py -c spyder example_spyderlike.py example_from_spyderlike.ipynb
+ py2ipynb.py -c spyder example_spyderlike.py example_from_spyderlike.ipynb
 ```
 
 ## Cell markers
