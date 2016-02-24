@@ -70,8 +70,8 @@ def py2ipynb(input, output, cellmode, other_ignores=[]):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input", required=True, help="input python file")
-    parser.add_argument("-o", "--output", required=True, help="output notebook file")
+    parser.add_argument("input", help="input python file")
+    parser.add_argument("output", help="output notebook file")
     parser.add_argument("-c", "--cell-mode", help="pycharm|spyder (pycharm)")
     args = parser.parse_args()
 
