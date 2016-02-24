@@ -26,9 +26,9 @@ Spyder style:
 
 ### Markdown cell:
 
-Use one of the code cell markers first, then in a newline follow by `#md` 
-(also `# md`, `#markdown`, `# markdown`), and include your markdown code within a block comment below. 
-Everything till the next cell mark (e.g. `##` if using pycharm style cell markers) will go to a 
+Use one of the code cell markers first, then in a newline follow by `#md`
+(also `# md`, `#markdown`, `# markdown`), and include your markdown code within a block comment below.
+Everything till the next cell mark (e.g. `##` if using pycharm style cell markers) will go to a
 markdown cell.
 
 E.g.
@@ -46,6 +46,34 @@ E.g.
 ##
 print("hello world")
 ```
+
+### Slide metadata
+
+Add after the cell marker in a new line an optional slide metadata marker `#slide: <slide_type>` (also `# slide: <slide_type>`), where `<slide_type>` can be one of the standard slide types `-`, `slide`, `sub-slide`, `fragment`, `skip` and `notes`.
+
+**Default** when there is no slide tag is `slide`.
+
+E.g.
+
+```python
+##
+```python
+##
+#md
+#slide:skip
+"""
+# Header
+
+* item 1
+* item 2
+"""
+
+##
+#slide:slide
+print("hello world")
+```
+
+On how to convert the notebook to a static format (including slides format) read [this doc-page](http://ipython.org/ipython-doc/3/notebook/nbconvert.html), or specifically for slides generation [this guide](http://www.damian.oquanta.info/posts/make-your-slides-with-ipython.html) is helpful.
 
 ## Examples
 

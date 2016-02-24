@@ -27,23 +27,31 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
     with open(py_filename, "r") as f:
         lines = []
         codecell = True
+        metadata = {"slideshow": {"slide_type": "slide"}}
         for l in f:
             l1 = l.strip()
             if lines and ((l1.startswith('# In[') and l1.endswith(']:')) or l1 == CELLMARKS[cellmark_style]):
-                yield (codecell, "".join(lines).strip(linesep))
+                yield (codecell, metadata, "".join(lines).strip(linesep))
                 lines = []
                 codecell = True
+                metadata = {"slideshow": {"slide_type": "slide"}}
                 continue
 
             if l1 in ("#md", "# md", "#markdown", "# markdown"):
                 codecell = False
                 continue
 
+            if l1.startswith("#slide:") or l1.startswith("# slide:"):
+                slidetype = l1.split(":")[-1].strip()
+                slidetype = slidetype.strip(linesep)
+                metadata["slideshow"]["slide_type"] = slidetype
+                continue
+
             if l1 not in ignores:
                 lines.append(l)
 
         if lines:
-            yield (codecell, "".join(lines).strip(linesep))
+            yield (codecell, metadata, "".join(lines).strip(linesep))
 
 def py2ipynb(input, output, cellmark_style, other_ignores=[]):
     """Converts a .py file to a V.4 .ipynb notebook usiing `parsePy` function
@@ -56,8 +64,9 @@ def py2ipynb(input, output, cellmark_style, other_ignores=[]):
     # Create the code cells by parsing the file in input
     cells = []
     for c in parsePy(input, cellmark_style, other_ignores):
-        codecell, code = c
-        cells.append(new_code_cell(source=code) if codecell else new_markdown_cell(source=code))
+        codecell, metadata, code = c
+        cell = new_code_cell(source=code, metadata=metadata) if codecell else new_markdown_cell(source=code, metadata=metadata)
+        cells.append(cell)
 
     # This creates a V4 Notebook with the code cells extracted above
     nb0 = new_notebook(cells=cells,

@@ -1,5 +1,6 @@
 ##
 #md
+#slide:slide
 """
 # Header
 
@@ -11,6 +12,7 @@
 print("first cell")
 
 ##
+#slide: skip
 print("second cell")
 
 ##
