@@ -26,8 +26,8 @@ Spyder-like:
 
 ### Markdown cell:
 
-Use one the code cell markers first followed in a newline by `#md` 
-(or `# md`, `#markdown`, `# markdown`, and include your markdown code within a block comment. 
+Use one of the code cell markers first, then in a newline follow by `#md` 
+(also `# md`, `#markdown`, `# markdown`), and include your markdown code within a block comment below. 
 Everything till the next cell mark (e.g. `##` if using pycharm-like cell markers) will go to a 
 markdown cell.
 
