@@ -1,6 +1,6 @@
 # py2ipynb
 
-Converts a .py file to a V.4 .ipynb jupyter/ipython notebook.
+Converts a .py python source file to a V.4 .ipynb jupyter/ipython notebook.
 
 Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from-ipython-notebook-format
 
@@ -50,7 +50,7 @@ print("hello world")
 ```
 
 ### Inline matplotlib
-Simply add in a new line after the cell marker `#%matplotlib inline` or `# %matplotlib inline`, or instead of `inline` any [other backend supported](http://ipython.org/ipython-doc/stable/interactive/reference.html#plotting-with-matplotlib).
+Simply add in a new line after the cell marker `#%matplotlib inline` or `# %matplotlib inline`, or instead of `inline` any [other supported backend](http://ipython.org/ipython-doc/stable/interactive/reference.html#plotting-with-matplotlib).
 
 ### Slide metadata
 
