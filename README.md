@@ -46,3 +46,7 @@ E.g.
 ##
 print("hello world")
 ```
+
+## Examples
+
+See also examples: [pycharm-style](https://github.com/yianni/py2ipynb/blob/master/example_pycharmlike.py) | [spyder-style](https://github.com/yianni/py2ipynb/blob/master/example_spyderlike.py)
