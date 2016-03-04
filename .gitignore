@@ -72,4 +72,4 @@ target/
 .idea/
 
 #
-test.*
+test*.*

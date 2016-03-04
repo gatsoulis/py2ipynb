@@ -7,6 +7,7 @@ Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from
 import argparse
 import nbformat
 from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
+from IPython.nbformat import v3, v4
 import codecs
 from os import linesep
 
@@ -78,15 +79,40 @@ def py2ipynb(input, output, cellmark_style, other_ignores=[]):
     with codecs.open(output, encoding='utf-8', mode='w') as f:
         nbformat.write(nb0, f, 4)
 
+def py2ipynb_default(input, output):
+    with open(input) as f:
+        code = f.read()
+    code += """
+# <markdowncell>
+
+# If you can read this, reads_py() is no longer broken!
+"""
+    # print(code)
+    # return
+    nbook = v3.reads_py(code)
+    nbook = v4.upgrade(nbook)  # Upgrade v3 to v4
+    jsonform = v4.writes(nbook) + "\n"
+
+    with open(output, "w") as f:
+        f.write(jsonform)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("input", help="input python file")
     parser.add_argument("output", help="output notebook file")
-    parser.add_argument("-c", "--cellmark-style", default="pycharm",
-                        help="pycharm|spyder (pycharm)")
+    cellmark_style_arg = parser.add_argument("-c", "--cellmark-style", default="default",
+                        help="default|pycharm|spyder (pycharm)")
     args = parser.parse_args()
 
-    py2ipynb(args.input, args.output, args.cellmark_style,
-             ["# ----------------------------------------------------------------------------"])
+    cellmark_style_options = ("default", "pycharm", "spyder")
+    if args.cellmark_style not in cellmark_style_options:
+        raise argparse.ArgumentError(cellmark_style_arg,
+                                     "invalid value, can only be one of "+ str(cellmark_style_options))
+
+    if args.cellmark_style == "default":
+        py2ipynb_default(args.input, args.output)
+    else:
+        py2ipynb(args.input, args.output, args.cellmark_style,
+                 ["# ----------------------------------------------------------------------------"])
 
