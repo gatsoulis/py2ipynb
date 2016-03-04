@@ -95,4 +95,4 @@ On how to convert the notebook to a static format (including slides format) read
 
 ## Examples
 
-See also examples: [default](https://github.com/yianni/py2ipynb/blob/master/example_default.py) | [pycharm-style](https://github.com/yianni/py2ipynb/blob/master/example_pycharmlike.py) | [spyder-style](https://github.com/yianni/py2ipynb/blob/master/example_spyderlike.py)
+See also examples: [default](https://github.com/yianni/py2ipynb/blob/master/examples/example_default.py) | [pycharm-style](https://github.com/yianni/py2ipynb/blob/master/examples/example_pycharmlike.py) | [spyder-style](https://github.com/yianni/py2ipynb/blob/master/examples/example_spyderlike.py)
