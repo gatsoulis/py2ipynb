@@ -87,8 +87,7 @@ def py2ipynb_default(input, output):
 
 # If you can read this, reads_py() is no longer broken!
 """
-    # print(code)
-    # return
+
     nbook = v3.reads_py(code)
     nbook = v4.upgrade(nbook)  # Upgrade v3 to v4
     jsonform = v4.writes(nbook) + "\n"
