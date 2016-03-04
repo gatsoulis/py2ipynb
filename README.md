@@ -6,6 +6,8 @@ Based on [this](http://stackoverflow.com/a/32994192/4720148) and [this](http://s
 
 ## Usage
 
+Run from the examples folder, and don't forget to add the `py2ipynb` path to your system path.
+
 _Default_:
 
 ```bash
