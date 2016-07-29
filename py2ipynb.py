@@ -24,7 +24,7 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
     :param other_ignores: Other lines to ignore
     :return: A string containing one or more lines
     """
-    ignores = ['"""', "'''"] + CELLMARKS.values() + other_ignores
+    ignores = ['"""', "'''"] + list(CELLMARKS.values()) + list(other_ignores)
     with open(py_filename, "r") as f:
         lines = []
         codecell = True
