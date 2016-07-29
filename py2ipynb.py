@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Converts a .py file to a V.4 .ipynb notebook
 
 Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from-ipython-notebook-format
@@ -31,6 +31,19 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
         metadata = {"slideshow": {"slide_type": "slide"}}
         for l in f:
             l1 = l.strip()
+            #print(l1)	
+            if lines and ( l1.startswith(CELLMARKS[cellmark_style]) ):
+                tmp=l1[len(CELLMARKS[cellmark_style]):].strip()
+                yield (codecell, metadata, "".join(lines).strip(linesep))
+                if (len(tmp)>0):
+                    # append header
+                    print(tmp)
+                    metadata = {"slideshow": {"slide_type": "slide"}}
+                    yield (False, metadata, '# %s' % tmp)
+                lines = []
+                codecell = True
+                metadata = {"slideshow": {"slide_type": "slide"}}
+                continue
             if lines and ((l1.startswith('# In[') and l1.endswith(']:')) or l1 == CELLMARKS[cellmark_style]):
                 yield (codecell, metadata, "".join(lines).strip(linesep))
                 lines = []
