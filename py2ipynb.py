@@ -7,7 +7,7 @@ Modified from http://stackoverflow.com/questions/23292242/converting-to-not-from
 import argparse
 import nbformat
 from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
-from IPython.nbformat import v3, v4
+from nbformat import v3, v4
 import codecs
 from os import linesep
 
