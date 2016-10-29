@@ -31,13 +31,11 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
         metadata = {"slideshow": {"slide_type": "slide"}}
         for l in f:
             l1 = l.strip()
-            #print(l1)	
             if lines and ( l1.startswith(CELLMARKS[cellmark_style]) ):
                 tmp=l1[len(CELLMARKS[cellmark_style]):].strip()
                 yield (codecell, metadata, "".join(lines).strip(linesep))
                 if (len(tmp)>0):
                     # append header
-                    print(tmp)
                     metadata = {"slideshow": {"slide_type": "slide"}}
                     yield (False, metadata, '# %s' % tmp)
                 lines = []
