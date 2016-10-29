@@ -24,13 +24,16 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
     :param other_ignores: Other lines to ignore
     :return: A string containing one or more lines
     """
-    ignores = ['"""', "'''"] + list(CELLMARKS.values()) + list(other_ignores)
+    codecell_ignores = list(CELLMARKS.values()) + list(other_ignores)
+    nocodecell_ignores = ['"""', "'''"] + list(CELLMARKS.values()) + list(other_ignores)
+
     with open(py_filename, "r") as f:
         lines = []
         codecell = True
         metadata = {"slideshow": {"slide_type": "slide"}}
         for l in f:
             l1 = l.strip()
+
             if lines and ( l1.startswith(CELLMARKS[cellmark_style]) ):
                 tmp=l1[len(CELLMARKS[cellmark_style]):].strip()
                 yield (codecell, metadata, "".join(lines).strip(linesep))
@@ -42,6 +45,7 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
                 codecell = True
                 metadata = {"slideshow": {"slide_type": "slide"}}
                 continue
+            
             if lines and ((l1.startswith('# In[') and l1.endswith(']:')) or l1 == CELLMARKS[cellmark_style]):
                 yield (codecell, metadata, "".join(lines).strip(linesep))
                 lines = []
@@ -62,11 +66,12 @@ def parsePy(py_filename, cellmark_style, other_ignores=[]):
             if "%matplotlib" in l1:
                 l = l.strip()[1:].strip()
 
-            if l1 not in ignores:
+            if (codecell and l1 not in codecell_ignores) or (not codecell and l1 not in nocodecell_ignores):
                 lines.append(l)
 
         if lines:
             yield (codecell, metadata, "".join(lines).strip(linesep))
+
 
 def py2ipynb(input, output, cellmark_style, other_ignores=[]):
     """Converts a .py file to a V.4 .ipynb notebook usiing `parsePy` function
@@ -90,6 +95,7 @@ def py2ipynb(input, output, cellmark_style, other_ignores=[]):
     with codecs.open(output, encoding='utf-8', mode='w') as f:
         nbformat.write(nb0, f, 4)
 
+
 def py2ipynb_default(input, output):
     with open(input) as f:
         code = f.read()
@@ -112,7 +118,7 @@ if __name__ == '__main__':
     parser.add_argument("input", help="input python file")
     parser.add_argument("output", help="output notebook file")
     cellmark_style_arg = parser.add_argument("-c", "--cellmark-style", default="default",
-                        help="default|pycharm|spyder (pycharm)")
+                        help="default|pycharm|spyder")
     args = parser.parse_args()
 
     cellmark_style_options = ("default", "pycharm", "spyder")
