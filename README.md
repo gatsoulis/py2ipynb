@@ -67,7 +67,7 @@ Simply add in a new line after the cell marker `#%matplotlib inline` or `# %matp
 
 #### Slide metadata
 
-Add after the cell marker in a new line an optional slide metadata marker `#slide: <slide_type>` (also `# slide: <slide_type>`), where `<slide_type>` can be one of the standard slide types `-`, `slide`, `sub-slide`, `fragment`, `skip` and `notes`.
+Add after the cell marker in a new line an optional slide metadata marker `#slide: <slide_type>` (also `# slide: <slide_type>`), where `<slide_type>` can be one of the standard slide types `-`, `slide`, `subslide`, `fragment`, `skip` and `notes`.
 
 **Default** when there is no slide tag is `slide`.
 
